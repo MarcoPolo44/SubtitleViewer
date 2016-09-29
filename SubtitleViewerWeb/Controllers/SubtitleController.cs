@@ -26,26 +26,26 @@ namespace SubtitleViewerWeb.Controllers
 
         // POST: Upload
         [HttpPost]
-        public ActionResult Upload(HttpPostedFileBase file)
+        public ActionResult Upload([Bind(Include = "ID,File,Time")] UploadModel upload)
         {
             // Clear old entries
             db.SubtitleModel.RemoveRange(db.SubtitleModel);
             db.SaveChanges();
 
             // Parse subtitle file
-            if (file != null && file.ContentLength > 0)
+            if (upload.File != null && upload.File.ContentLength > 0)
             {
-                var fileName = Path.GetFileName(file.FileName);
+                var fileName = Path.GetFileName(upload.File.FileName);
                 var path = Path.Combine(Server.MapPath("~/App_Data/Uploads"), fileName);
-                file.SaveAs(path);
+                upload.File.SaveAs(path);
 
-                ParseSubtitles(file);
+                ParseSubtitles(upload.File, upload.Time);
             }
             
             return RedirectToAction("Viewer");
         }
 
-        private void ParseSubtitles(HttpPostedFileBase file)
+        private void ParseSubtitles(HttpPostedFileBase file, DateTime totalTime)
         {
             var parser = new SubtitlesParser.Classes.Parsers.SubParser();
 
@@ -66,7 +66,17 @@ namespace SubtitleViewerWeb.Controllers
 
                             var timeSpan = TimeSpan.FromMilliseconds(item.StartTime);
                             var time = new TimeSpan(timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds);
-                            model.Time = time.ToString();
+
+                            if (totalTime != null)
+                            {
+                                var totalTimeSpan = new TimeSpan(totalTime.Hour, totalTime.Minute, totalTime.Second);
+                                var timeDiff = totalTimeSpan - time;
+                                model.Time = timeDiff.ToString();
+                            }
+                            else
+                            {
+                                model.Time = time.ToString();
+                            }
 
                             string subtitle = "";
                             foreach (var line in item.Lines)
