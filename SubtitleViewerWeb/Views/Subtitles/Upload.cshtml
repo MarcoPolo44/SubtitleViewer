@@ -1,0 +1,47 @@
+﻿@model SubtitleViewerWeb.Models.UploadModel
+
+@{
+    ViewBag.Title = "Upload";
+}
+
+<h2>Upload</h2>
+
+@using (Html.BeginForm("Upload", "Subtitles", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Subtitles</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.File, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10 editor-field">
+                <div class="input-group">
+                    <label class="input-group-btn">
+                        <span class="btn btn-default">
+                            Browse&hellip; <input type="file" name="File" style="display: none;" multiple>
+                        </span>
+                    </label>
+                    <input type="text" class="form-control" readonly>
+                </div>
+                @Html.ValidationMessageFor(model => model.File)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Time, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Time, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Time, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Upload" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
