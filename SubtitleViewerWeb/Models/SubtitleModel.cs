@@ -5,6 +5,11 @@ using System.Web;
 
 namespace SubtitleViewerWeb.Models
 {
+    public class SubtitleListModel
+    {
+        public List<SubtitleModel> Subtitles { get; set; } = new List<SubtitleModel>();
+    }
+
     public class SubtitleModel
     {
         public int ID { get; set; }

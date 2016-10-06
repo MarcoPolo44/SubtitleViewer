@@ -6,12 +6,16 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace SubtitleViewerWeb.Controllers
 {
     public class SubtitlesController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        //private ApplicationDbContext db = new ApplicationDbContext();
+
+        // Create subtitle list
+        private SubtitleListModel subtitleList = new SubtitleListModel();
 
         // GET: Subtitle
         public ActionResult Index()
@@ -29,10 +33,6 @@ namespace SubtitleViewerWeb.Controllers
         [HttpPost]
         public ActionResult Upload([Bind(Include = "ID,File,Time")] UploadModel upload)
         {
-            // Clear old entries
-            db.SubtitleModel.RemoveRange(db.SubtitleModel);
-            db.SaveChanges();
-
             // Parse subtitle file
             if (upload.File != null && upload.File.ContentLength > 0)
             {
@@ -43,6 +43,7 @@ namespace SubtitleViewerWeb.Controllers
                 ParseSubtitles(upload.File, upload.Time);
             }
 
+            TempData["subtitles"] = subtitleList;
             return RedirectToAction("Viewer");
         }
 
@@ -68,7 +69,7 @@ namespace SubtitleViewerWeb.Controllers
                             var timeSpan = TimeSpan.FromMilliseconds(item.StartTime);
                             var time = new TimeSpan(timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds);
 
-                            if (totalTime != null)
+                            if (totalTime.Ticks > 0)
                             {
                                 var totalTimeSpan = new TimeSpan(totalTime.Hour, totalTime.Minute, totalTime.Second);
                                 var timeDiff = totalTimeSpan - time;
@@ -87,8 +88,8 @@ namespace SubtitleViewerWeb.Controllers
                             }
                             model.Subtitle = subtitle;
 
-                            db.SubtitleModel.Add(model);
-                            db.SaveChanges();
+                            // Add subtitle to list
+                            subtitleList.Subtitles.Add(model);
                         }
                     }
                     else
@@ -107,7 +108,8 @@ namespace SubtitleViewerWeb.Controllers
         // GET: View
         public ActionResult Viewer()
         {
-            return View(db.SubtitleModel.ToList());
+            subtitleList = (SubtitleListModel) TempData["subtitles"];
+            return View(subtitleList);
         }
     }
 }

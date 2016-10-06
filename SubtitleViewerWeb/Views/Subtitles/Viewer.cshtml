@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SubtitleViewerWeb.Models.SubtitleModel>
+﻿@model SubtitleViewerWeb.Models.SubtitleListModel
 
 @{
     ViewBag.Title = "Viewer";
@@ -12,24 +12,27 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Time)
+            @Html.DisplayNameFor(model => model.Subtitles[0].Time)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Subtitle)
+            @Html.DisplayNameFor(model => model.Subtitles[0].Subtitle)
         </th>
         <th></th>
     </tr>
 
-    @foreach (var item in Model)
+    @if (Model != null)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Time)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Subtitle)
-            </td>
-        </tr>
+        for (int i = 0; i < Model.Subtitles.Count(); ++i)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => model.Subtitles[i].Time)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Subtitles[i].Subtitle)
+                </td>
+            </tr>
+        }
     }
 
 </table>
