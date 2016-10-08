@@ -31,9 +31,17 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.Style, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Style, Model.StylesList, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Style, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div id="time-form-group-id" class="form-group" hidden>
             @Html.LabelFor(model => model.Time, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Time, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextBoxFor(model => model.Time, new { @class = "form-control text-box single-line", @Value = "" })
                 @Html.ValidationMessageFor(model => model.Time, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -44,4 +52,20 @@
             </div>
         </div>
     </div>
+}
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            $('#Style').change(function () {
+                var value = $(this).val();
+                if (value == "Remaining") {
+                    $('#time-form-group-id').show();
+                } else {
+                    $('#time-form-group-id').hide();
+                }
+            });
+        });
+    </script>
 }

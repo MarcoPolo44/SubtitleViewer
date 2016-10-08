@@ -26,12 +26,22 @@ namespace SubtitleViewerWeb.Controllers
         // GET: Upload
         public ActionResult Upload()
         {
-            return View();
+            UploadModel model = new UploadModel();
+            IEnumerable<TimeStyle> stlyeTypes = Enum.GetValues(typeof(TimeStyle))
+                                                         .Cast<TimeStyle>();
+            model.StylesList = from stlye in stlyeTypes
+                               select new SelectListItem
+                             {
+                                 Text = "Time " + stlye.ToString(),
+                                 Value = stlye.ToString()
+                             };
+
+            return View(model);
         }
 
         // POST: Upload
         [HttpPost]
-        public ActionResult Upload([Bind(Include = "ID,File,Time")] UploadModel upload)
+        public ActionResult Upload([Bind(Include = "ID,File,Style,Time")] UploadModel upload)
         {
             // Parse subtitle file
             if (upload.File != null && upload.File.ContentLength > 0)
@@ -40,14 +50,14 @@ namespace SubtitleViewerWeb.Controllers
                 var path = Path.Combine(Server.MapPath("~/App_Data/Uploads"), fileName);
                 upload.File.SaveAs(path);
 
-                ParseSubtitles(upload.File, upload.Time);
+                ParseSubtitles(upload.File, upload.Time, upload.Style);
             }
 
             TempData["subtitles"] = subtitleList;
             return RedirectToAction("Viewer");
         }
 
-        private void ParseSubtitles(HttpPostedFileBase file, DateTime totalTime)
+        private void ParseSubtitles(HttpPostedFileBase file, DateTime totalTime, string style)
         {
             var parser = new SubtitlesParser.Classes.Parsers.SubParser();
 
@@ -69,15 +79,19 @@ namespace SubtitleViewerWeb.Controllers
                             var timeSpan = TimeSpan.FromMilliseconds(item.StartTime);
                             var time = new TimeSpan(timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds);
 
-                            if (totalTime.Ticks > 0)
+                            if (style == "Remaining")
                             {
                                 var totalTimeSpan = new TimeSpan(totalTime.Hour, totalTime.Minute, totalTime.Second);
                                 var timeDiff = totalTimeSpan - time;
                                 model.Time = timeDiff.ToString();
                             }
-                            else
+                            else if (style == "Elapsed")
                             {
                                 model.Time = time.ToString();
+                            }
+                            else
+                            {
+                                throw new ArgumentException("Time style not defined!");
                             }
 
                             string subtitle = "";
@@ -100,7 +114,7 @@ namespace SubtitleViewerWeb.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Parsing of file {0}: FAILURE\n{1}", file.FileName, ex);
+                    RedirectToAction("Error");
                 }
             }
         }
@@ -140,7 +154,7 @@ namespace SubtitleViewerWeb.Controllers
         {
             subtitleList = (SubtitleListModel)TempData["subtitles"];
 
-            if (subtitleList == null)
+            if (subtitleList == null || subtitleList.Subtitles.Count == 0)
                 return RedirectToAction("Error");
 
             return View(subtitleList);
@@ -150,7 +164,15 @@ namespace SubtitleViewerWeb.Controllers
         [HttpPost]
         public ActionResult Edit(SubtitleListModel model)
         {
-            model.Subtitles[0].Time = model.EditTime.ToString("HH:mm:ss");
+            TimeSpan timeDiff = (model.EditTime - Convert.ToDateTime(model.Subtitles[0].Time));
+
+            for (int i = 0; i < model.Subtitles.Count(); ++i)
+            {
+                TimeSpan timeSpan = TimeSpan.Parse(model.Subtitles[i].Time);
+                timeSpan += timeDiff;
+
+                model.Subtitles[i].Time = timeSpan.ToString();
+            }
 
             TempData["subtitles"] = model;
             return RedirectToAction("Viewer");
