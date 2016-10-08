@@ -111,5 +111,55 @@ namespace SubtitleViewerWeb.Controllers
             subtitleList = (SubtitleListModel) TempData["subtitles"];
             return View(subtitleList);
         }
+
+        // POST: Viewer
+        [HttpPost]
+        public ActionResult Viewer(SubtitleListModel model, string command)
+        {
+            if (command.Equals("Upload New"))
+            {
+                return RedirectToAction("Upload");
+            }
+            else if (command.Equals("Edit Time"))
+            {
+                TempData["subtitles"] = model;
+                return RedirectToAction("Edit");
+            }
+            else if (command.Equals("Delete All"))
+            {
+                return RedirectToAction("Viewer");
+            }
+            else
+            {
+                return RedirectToAction("Error");
+            }
+        }
+
+        // GET: Edit
+        public ActionResult Edit()
+        {
+            subtitleList = (SubtitleListModel)TempData["subtitles"];
+
+            if (subtitleList == null)
+                return RedirectToAction("Error");
+
+            return View(subtitleList);
+        }
+
+        // POST: Edit
+        [HttpPost]
+        public ActionResult Edit(SubtitleListModel model)
+        {
+            model.Subtitles[0].Time = model.EditTime.ToString("HH:mm:ss");
+
+            TempData["subtitles"] = model;
+            return RedirectToAction("Viewer");
+        }
+
+        // GET: Error
+        public ActionResult Error()
+        {
+            return View();
+        }
     }
 }

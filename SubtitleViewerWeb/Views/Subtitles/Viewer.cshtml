@@ -6,9 +6,24 @@
 
 <h2>Viewer</h2>
 
-<p>
-    @Html.ActionLink("Upload New", "Upload")
-</p>
+@using (Html.BeginForm("Viewer", "Subtitles", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-horizontal">
+        @if (Model != null)
+        {
+            for (int i = 0; i < Model.Subtitles.Count(); ++i)
+            {
+                @Html.HiddenFor(model => Model.Subtitles[i].Time)
+                @Html.HiddenFor(model => Model.Subtitles[i].Subtitle)
+            }
+        }
+        @Html.HiddenFor(model => Model.EditTime)
+
+        <input type="submit" name="command" value="Upload New" class="btn btn-link" /> |
+        <input type="submit" name="command" value="Edit Time" class="btn btn-link" /> |
+        <input type="submit" name="command" value="Delete All" class="btn btn-link" />
+    </div>
+}
 <table class="table">
     <tr>
         <th>
