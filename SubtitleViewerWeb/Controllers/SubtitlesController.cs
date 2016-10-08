@@ -161,16 +161,19 @@ namespace SubtitleViewerWeb.Controllers
 
         // POST: Edit
         [HttpPost]
-        public ActionResult Edit(SubtitleListModel model)
+        public ActionResult Edit(SubtitleListModel model, string cmd)
         {
-            TimeSpan timeDiff = (model.EditTime - TimeSpan.Parse(model.Subtitles[0].Time));
-
-            for (int i = 0; i < model.Subtitles.Count(); ++i)
+            if (cmd == "Edit")
             {
-                TimeSpan timeSpan = TimeSpan.Parse(model.Subtitles[i].Time);
-                timeSpan += timeDiff;
+                TimeSpan timeDiff = (model.EditTime - TimeSpan.Parse(model.Subtitles[0].Time));
 
-                model.Subtitles[i].Time = timeSpan.ToString();
+                for (int i = 0; i < model.Subtitles.Count(); ++i)
+                {
+                    TimeSpan timeSpan = TimeSpan.Parse(model.Subtitles[i].Time);
+                    timeSpan += timeDiff;
+
+                    model.Subtitles[i].Time = timeSpan.ToString();
+                }
             }
 
             TempData["subtitles"] = model;
