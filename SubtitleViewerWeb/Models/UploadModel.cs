@@ -15,12 +15,13 @@ namespace SubtitleViewerWeb.Models
         [Required]
         public HttpPostedFileBase File { get; set; }
 
+        [Required]
         public IEnumerable<SelectListItem> StylesList { get; set; } = new List<SelectListItem>();
         public string Style { get; set; }
 
         [DataType(DataType.Time)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{HH:mm:ss}")]
-        public DateTime Time { get; set; }
+        public TimeSpan Time { get; set; }
     }
 
     

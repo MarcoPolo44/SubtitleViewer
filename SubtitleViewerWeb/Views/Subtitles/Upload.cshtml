@@ -62,8 +62,10 @@
                 var value = $(this).val();
                 if (value == "Remaining") {
                     $('#time-form-group-id').show();
+                    $('#Time').prop('required', true);
                 } else {
                     $('#time-form-group-id').hide();
+                    $('#Time').prop('required',false);
                 }
             });
         });

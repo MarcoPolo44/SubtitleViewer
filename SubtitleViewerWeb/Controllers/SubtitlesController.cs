@@ -57,7 +57,7 @@ namespace SubtitleViewerWeb.Controllers
             return RedirectToAction("Viewer");
         }
 
-        private void ParseSubtitles(HttpPostedFileBase file, DateTime totalTime, string style)
+        private void ParseSubtitles(HttpPostedFileBase file, TimeSpan totalTime, string style)
         {
             var parser = new SubtitlesParser.Classes.Parsers.SubParser();
 
@@ -81,8 +81,7 @@ namespace SubtitleViewerWeb.Controllers
 
                             if (style == "Remaining")
                             {
-                                var totalTimeSpan = new TimeSpan(totalTime.Hour, totalTime.Minute, totalTime.Second);
-                                var timeDiff = totalTimeSpan - time;
+                                var timeDiff = totalTime - time;
                                 model.Time = timeDiff.ToString();
                             }
                             else if (style == "Elapsed")
@@ -164,7 +163,7 @@ namespace SubtitleViewerWeb.Controllers
         [HttpPost]
         public ActionResult Edit(SubtitleListModel model)
         {
-            TimeSpan timeDiff = (model.EditTime - Convert.ToDateTime(model.Subtitles[0].Time));
+            TimeSpan timeDiff = (model.EditTime - TimeSpan.Parse(model.Subtitles[0].Time));
 
             for (int i = 0; i < model.Subtitles.Count(); ++i)
             {

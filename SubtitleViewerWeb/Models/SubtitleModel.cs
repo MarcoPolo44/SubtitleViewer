@@ -11,10 +11,11 @@ namespace SubtitleViewerWeb.Models
     {
         public List<SubtitleModel> Subtitles { get; set; } = new List<SubtitleModel>();
 
+        [Required]
         [Display(Name = "Time")]
         [DataType(DataType.Time)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{HH:mm:ss}")]
-        public DateTime EditTime { get; set; }
+        public TimeSpan EditTime { get; set; }
     }
 
     public class SubtitleModel
