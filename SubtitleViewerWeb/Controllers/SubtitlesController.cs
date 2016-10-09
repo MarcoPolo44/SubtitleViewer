@@ -69,7 +69,7 @@ namespace SubtitleViewerWeb.Controllers
                 try
                 {
                     var mostLikelyFormat = parser.GetMostLikelyFormat(file.FileName);
-                    var items = parser.ParseStream(fileStream, Encoding.UTF8, mostLikelyFormat);
+                    var items = parser.ParseStream(fileStream, Encoding.Default, mostLikelyFormat);
                     if (items.Any())
                     {
                         foreach (var item in items)
