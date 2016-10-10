@@ -43,14 +43,18 @@ namespace SubtitleViewerWeb.Controllers
         [HttpPost]
         public ActionResult Upload([Bind(Include = "ID,File,Style,Time")] UploadModel upload)
         {
-            // Parse subtitle file
             if (upload.File != null && upload.File.ContentLength > 0)
             {
+                // Upload file
                 var fileName = Path.GetFileName(upload.File.FileName);
-                var path = Path.Combine(Server.MapPath("~/App_Data/Uploads"), fileName);
-                upload.File.SaveAs(path);
+                var filePath = Path.Combine(Server.MapPath("~/App_Data/Uploads"), fileName);
+                upload.File.SaveAs(filePath);
 
+                // Parse file
                 ParseSubtitles(upload.File, upload.Time, upload.Style);
+
+                // Delete file off server
+                System.IO.File.Delete(filePath);
             }
 
             TempData["subtitles"] = subtitleList;
