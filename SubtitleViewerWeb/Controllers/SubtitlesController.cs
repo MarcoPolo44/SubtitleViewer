@@ -43,6 +43,8 @@ namespace SubtitleViewerWeb.Controllers
         [HttpPost]
         public ActionResult Upload([Bind(Include = "ID,File,Style,Time")] UploadModel upload)
         {
+            string error = "Sorry, no file could be found.";
+
             if (upload.File != null && upload.File.ContentLength > 0)
             {
                 // Upload file
@@ -51,18 +53,27 @@ namespace SubtitleViewerWeb.Controllers
                 upload.File.SaveAs(filePath);
 
                 // Parse file
-                ParseSubtitles(upload.File, upload.Time, upload.Style);
+                error = ParseSubtitles(upload.File, upload.Time, upload.Style);
 
                 // Delete file off server
                 System.IO.File.Delete(filePath);
             }
 
-            TempData["subtitles"] = subtitleList;
-            return RedirectToAction("Viewer");
+            if (error == null)
+            {
+                TempData["subtitles"] = subtitleList;
+                return RedirectToAction("Viewer");
+            }
+            else
+            {
+                TempData["error"] = error;
+                return RedirectToAction("Error");
+            }
         }
 
-        private void ParseSubtitles(HttpPostedFileBase file, TimeSpan totalTime, string style)
+        private string ParseSubtitles(HttpPostedFileBase file, TimeSpan totalTime, string style)
         {
+            string result = null;
             var parser = new SubtitlesParser.Classes.Parsers.SubParser();
 
             var fileName = Path.GetFileName(file.FileName);
@@ -73,6 +84,9 @@ namespace SubtitleViewerWeb.Controllers
                 try
                 {
                     var mostLikelyFormat = parser.GetMostLikelyFormat(file.FileName);
+                    if (mostLikelyFormat == null)
+                        throw new ArgumentException("Sorry, we do not support this file type.");
+
                     var items = parser.ParseStream(fileStream, Encoding.Default, mostLikelyFormat);
                     if (items.Any())
                     {
@@ -94,7 +108,7 @@ namespace SubtitleViewerWeb.Controllers
                             }
                             else
                             {
-                                throw new ArgumentException("Time style not defined!");
+                                throw new ArgumentException("Sorry, the time style was not defined.");
                             }
 
                             string subtitle = "";
@@ -111,15 +125,16 @@ namespace SubtitleViewerWeb.Controllers
                     }
                     else
                     {
-                        throw new ArgumentException("Not items found!");
+                        throw new ArgumentException("Sorry, not subtitles counld be found!");
                     }
-
                 }
                 catch (Exception ex)
                 {
-                    RedirectToAction("Error");
+                    result = ex.Message;
                 }
             }
+
+            return result;
         }
 
         // GET: View
@@ -144,10 +159,12 @@ namespace SubtitleViewerWeb.Controllers
             }
             else if (command.Equals("Delete All"))
             {
+                TempData["subtitles"] = null;
                 return RedirectToAction("Viewer");
             }
             else
             {
+                TempData["error"] = "Sorry, this action is not available.";
                 return RedirectToAction("Error");
             }
         }
@@ -158,7 +175,10 @@ namespace SubtitleViewerWeb.Controllers
             subtitleList = (SubtitleListModel)TempData["subtitles"];
 
             if (subtitleList == null || subtitleList.Subtitles.Count == 0)
+            {
+                TempData["error"] = "Sorry, we could not find any subtitles to edit.";
                 return RedirectToAction("Error");
+            }
 
             return View(subtitleList);
         }
@@ -187,7 +207,8 @@ namespace SubtitleViewerWeb.Controllers
         // GET: Error
         public ActionResult Error()
         {
-            return View();
+            string errorMsg = (string)TempData["error"];
+            return View((object)errorMsg);
         }
     }
 }
