@@ -87,3 +87,17 @@ c:\users\marco\documents\visual studio 2015\Projects\SubtitleViewerWeb\SubtitleV
 c:\users\marco\documents\visual studio 2015\Projects\SubtitleViewerWeb\SubtitleViewerWeb\obj\Debug\SubtitleViewerWeb.pdb
 C:\Users\Marco\Documents\Visual Studio 2015\Projects\SubtitleViewerWeb\SubtitleViewerWeb\bin\SubtitlesParser.dll
 C:\Users\Marco\Documents\Visual Studio 2015\Projects\SubtitleViewerWeb\SubtitleViewerWeb\obj\Debug\SubtitleViewerWeb.csprojResolveAssemblyReference.cache
+C:\Users\Marco\documents\visual studio 2015\Projects\SubtitleViewerWeb\SubtitleViewerWeb\bin\roslyn\csc.exe.config
+C:\Users\Marco\documents\visual studio 2015\Projects\SubtitleViewerWeb\SubtitleViewerWeb\bin\roslyn\csc.rsp
+C:\Users\Marco\documents\visual studio 2015\Projects\SubtitleViewerWeb\SubtitleViewerWeb\bin\roslyn\csi.exe
+C:\Users\Marco\documents\visual studio 2015\Projects\SubtitleViewerWeb\SubtitleViewerWeb\bin\roslyn\csi.rsp
+C:\Users\Marco\documents\visual studio 2015\Projects\SubtitleViewerWeb\SubtitleViewerWeb\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\Marco\documents\visual studio 2015\Projects\SubtitleViewerWeb\SubtitleViewerWeb\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\Marco\documents\visual studio 2015\Projects\SubtitleViewerWeb\SubtitleViewerWeb\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\Marco\documents\visual studio 2015\Projects\SubtitleViewerWeb\SubtitleViewerWeb\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\Marco\documents\visual studio 2015\Projects\SubtitleViewerWeb\SubtitleViewerWeb\bin\roslyn\System.AppContext.dll
+C:\Users\Marco\documents\visual studio 2015\Projects\SubtitleViewerWeb\SubtitleViewerWeb\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\Marco\documents\visual studio 2015\Projects\SubtitleViewerWeb\SubtitleViewerWeb\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\Marco\documents\visual studio 2015\Projects\SubtitleViewerWeb\SubtitleViewerWeb\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\Marco\documents\visual studio 2015\Projects\SubtitleViewerWeb\SubtitleViewerWeb\bin\roslyn\vbc.exe.config
+C:\Users\Marco\documents\visual studio 2015\Projects\SubtitleViewerWeb\SubtitleViewerWeb\bin\roslyn\vbc.rsp
