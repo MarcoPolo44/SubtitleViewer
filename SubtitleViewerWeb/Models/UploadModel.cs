@@ -24,8 +24,6 @@ namespace SubtitleViewerWeb.Models
         public TimeSpan Time { get; set; }
     }
 
-    
-
     public enum TimeStyle
     {
         Elapsed,

@@ -101,3 +101,5 @@ C:\Users\Marco\documents\visual studio 2015\Projects\SubtitleViewerWeb\SubtitleV
 C:\Users\Marco\documents\visual studio 2015\Projects\SubtitleViewerWeb\SubtitleViewerWeb\bin\roslyn\System.IO.FileSystem.Primitives.dll
 C:\Users\Marco\documents\visual studio 2015\Projects\SubtitleViewerWeb\SubtitleViewerWeb\bin\roslyn\vbc.exe.config
 C:\Users\Marco\documents\visual studio 2015\Projects\SubtitleViewerWeb\SubtitleViewerWeb\bin\roslyn\vbc.rsp
+C:\Users\Marco\documents\visual studio 2015\Projects\SubtitleViewerWeb\SubtitleViewerWeb\bin\CookComputing.XmlRpcV2.dll
+C:\Users\Marco\documents\visual studio 2015\Projects\SubtitleViewerWeb\SubtitleViewerWeb\bin\OSDBnet.dll

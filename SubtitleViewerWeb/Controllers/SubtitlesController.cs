@@ -1,4 +1,5 @@
-﻿using SubtitleViewerWeb.Models;
+﻿using OSDBnet;
+using SubtitleViewerWeb.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,6 +17,9 @@ namespace SubtitleViewerWeb.Controllers
 
         // Create subtitle list
         private SubtitleListModel subtitleList = new SubtitleListModel();
+
+        // Create result list
+        private ResultListModel resultList = new ResultListModel();
 
         // GET: Subtitle
         public ActionResult Index()
@@ -53,7 +57,7 @@ namespace SubtitleViewerWeb.Controllers
                 upload.File.SaveAs(filePath);
 
                 // Parse file
-                error = ParseSubtitles(upload.File, upload.Time, upload.Style);
+                error = ParseSubtitles(fileName, upload.Time, upload.Style);
 
                 // Delete file off server
                 System.IO.File.Delete(filePath);
@@ -71,19 +75,18 @@ namespace SubtitleViewerWeb.Controllers
             }
         }
 
-        private string ParseSubtitles(HttpPostedFileBase file, TimeSpan totalTime, string style)
+        private string ParseSubtitles(string fileName, TimeSpan totalTime, string style)
         {
             string result = null;
             var parser = new SubtitlesParser.Classes.Parsers.SubParser();
 
-            var fileName = Path.GetFileName(file.FileName);
             var filePath = Path.Combine(Server.MapPath("~/App_Data/Uploads"), fileName);
 
             using (var fileStream = System.IO.File.OpenRead(filePath))
             {
                 try
                 {
-                    var mostLikelyFormat = parser.GetMostLikelyFormat(file.FileName);
+                    var mostLikelyFormat = parser.GetMostLikelyFormat(fileName);
                     if (mostLikelyFormat == null)
                         throw new ArgumentException("Sorry, we do not support this file type.");
 
@@ -137,7 +140,131 @@ namespace SubtitleViewerWeb.Controllers
             return result;
         }
 
-        // GET: View
+        // GET: Search
+        public ActionResult Search()
+        {
+            SearchModel model = new SearchModel();
+            IEnumerable<Languages> stlyeTypes = Enum.GetValues(typeof(Languages))
+                                                         .Cast<Languages>();
+            model.LanguagesList = from stlye in stlyeTypes
+                               select new SelectListItem
+                               {
+                                   Text = stlye.ToString(),
+                                   Value = stlye.ToString()
+                               };
+
+            return View(model);
+        }
+
+        // POST: Search
+        [HttpPost]
+        public ActionResult Search(SearchModel searchModel)
+        {
+            var lang = "all";
+
+            if (searchModel.Language == "English")
+            {
+                lang = "eng";
+            }
+            else if (searchModel.Language == "German")
+            {
+                lang = "ger";
+            }
+            else
+            {
+                lang = "all";
+            }
+
+            if (searchModel.Title == null || searchModel.Title == "")
+            {
+                TempData["error"] = "Sorry, that is not a valid subtitle query";
+                return RedirectToAction("Error");
+            }
+
+            //
+            // Open Subtitles query
+
+            var osdb = Osdb.Login("OSTestUserAgentTemp");
+            var results = osdb.SearchSubtitlesFromQuery(lang, searchModel.Title, searchModel.Season, searchModel.Episode);
+
+            resultList.Subtitles = results;
+
+            resultList.Results = from result in results
+                                  select new SelectListItem
+                                  {
+                                      Text = result.SubtitleFileName,
+                                      Value = result.SubtitleId
+                                  };
+
+            //
+            // Time Style
+
+            IEnumerable<TimeStyle> stlyeTypes = Enum.GetValues(typeof(TimeStyle))
+                                                         .Cast<TimeStyle>();
+            resultList.StylesList = from stlye in stlyeTypes
+                                  select new SelectListItem
+                                  {
+                                      Text = stlye.ToString(),
+                                      Value = stlye.ToString()
+                                  };
+
+            //
+            // View
+
+            TempData["result"] = resultList;
+            return RedirectToAction("Result");
+        }
+
+        // GET: Result
+        public ActionResult Result()
+        {
+            resultList = (ResultListModel)TempData["result"];
+            return View(resultList);
+        }
+
+        // POST: Result
+        [HttpPost]
+        public ActionResult Result(ResultListModel model)
+        {
+            Subtitle selectedResult = new Subtitle();
+            string error = "Sorry, no file could be found.";
+
+            if (model.File != null)
+            {
+                for (int i = 0; i < model.Subtitles.Count(); i++)
+                {
+                    if (model.File == model.Subtitles[i].SubtitleId)
+                    {
+                        selectedResult = model.Subtitles[i];
+                        break;
+                    }
+                }
+
+                // Download file
+                var osdb = Osdb.Login("OSTestUserAgentTemp");
+                osdb.DownloadSubtitleToPath(Server.MapPath("~/App_Data/Uploads"), selectedResult);
+
+                // Parse file
+                error = ParseSubtitles(selectedResult.SubtitleFileName, model.Time, model.Style);
+
+                // Delete file off server
+                var filePath = Path.Combine(Server.MapPath("~/App_Data/Uploads"), selectedResult.SubtitleFileName);
+                System.IO.File.Delete(filePath);
+            }
+
+            if (error == null)
+            {
+                TempData["subtitles"] = subtitleList;
+                return RedirectToAction("Viewer");
+            }
+            else
+            {
+                TempData["error"] = error;
+                return RedirectToAction("Error");
+            }
+        }
+
+        // GET: Viewer
         public ActionResult Viewer()
         {
             subtitleList = (SubtitleListModel) TempData["subtitles"];
