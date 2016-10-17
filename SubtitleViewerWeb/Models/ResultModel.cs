@@ -1,19 +1,20 @@
-﻿using System;
+﻿using OSDBnet;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
 namespace SubtitleViewerWeb.Models
 {
-    public class UploadModel
+    public class ResultListModel
     {
-        public int ID { get; set; }
-
         [Required]
-        public HttpPostedFileBase File { get; set; }
+        public IEnumerable<SelectListItem> Results { get; set; } = new List<SelectListItem>();
+        public string File { get; set; }
+
+        public IList<Subtitle> Subtitles { get; set; } = new List<Subtitle>();
 
         [Required]
         public IEnumerable<SelectListItem> StylesList { get; set; } = new List<SelectListItem>();
@@ -22,11 +23,5 @@ namespace SubtitleViewerWeb.Models
         [DataType(DataType.Time)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{HH:mm:ss}")]
         public TimeSpan Time { get; set; }
-    }
-
-    public enum TimeStyle
-    {
-        Elapsed,
-        Remaining
     }
 }

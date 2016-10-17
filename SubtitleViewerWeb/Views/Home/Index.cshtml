@@ -4,8 +4,34 @@
 
 <div class="jumbotron">
     <h1>Subtitle Companion</h1>
-    <p class="lead">Subtitle Companion is a free web-based .srt file parser for viewing subtitles <i>alongside</i> their corresponding video or other media.</p>
-    <p><a href="@Url.Action("Upload", "Subtitles")" class="btn btn-primary btn-lg">Upload &raquo;</a></p>
+    <p class="lead">A free web-based .srt file parser for viewing subtitles <i>alongside</i> their corresponding video.</p>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h1 class="panel-title">Upload</h1>
+            </div>
+
+            <div class="panel-body">
+                <p>Get a subtitle file from this PC.</p>
+                <a href="@Url.Action("Upload", "Subtitles")" class="btn btn-primary">Go &raquo;</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h1 class="panel-title">Search</h1>
+            </div>
+
+            <div class="panel-body">
+                <p>Get a subtitle file from the web.</p>
+                <a href="@Url.Action("Search", "Subtitles")" class="btn btn-primary">Go &raquo;</a>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="row">
@@ -24,7 +50,7 @@
         <p><a class="btn btn-default" href="http://www.tvsubtitles.net/">Learn more &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h2>Netflix</h2>
+        <h2>Watch on Netflix</h2>
         <p>Netflix is a great way to consume video content in a foriegn laguage.</p>
         <p><a class="btn btn-default" href="https://www.netflix.com/">Learn more &raquo;</a></p>
     </div>
