@@ -17,7 +17,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Subtitles[0].Subtitle, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-6">
                 @Html.TextBoxFor(model => model.Subtitles[0].Subtitle, 
                     new { @class = "form-control text-box single-line", @Value = Model.Subtitles[0].Subtitle, @readonly = "readonly" })
             </div>
@@ -25,14 +25,14 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.EditTime, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-2">
                 @Html.TextBoxFor(model => model.EditTime, 
                     new { @class = "form-control text-box single-line", @Value = Model.Subtitles[0].Time, @required = "required" })
                 @Html.ValidationMessageFor(model => model.EditTime, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" hidden>
             @if (Model != null)
             {
                 for (int i = 0; i < Model.Subtitles.Count(); ++i)

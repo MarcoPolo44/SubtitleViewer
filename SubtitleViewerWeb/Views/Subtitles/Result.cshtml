@@ -17,13 +17,13 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.File, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-6">
                 @Html.DropDownListFor(model => model.File, Model.Results, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.File, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" hidden>
             @if (Model != null)
             {
                 for (int i = 0; i < Model.Subtitles.Count(); ++i)
@@ -48,7 +48,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Style, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-2">
                 @Html.DropDownListFor(model => model.Style, Model.StylesList, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Style, "", new { @class = "text-danger" })
             </div>
@@ -56,7 +56,7 @@
 
         <div id="time-form-group-id" class="form-group" hidden>
             @Html.LabelFor(model => model.Time, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-2">
                 @Html.TextBoxFor(model => model.Time, new { @class = "form-control text-box single-line", @Value = "" })
                 @Html.ValidationMessageFor(model => model.Time, "", new { @class = "text-danger" })
             </div>

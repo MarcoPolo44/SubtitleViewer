@@ -204,7 +204,7 @@ namespace SubtitleViewerWeb.Controllers
             resultList.StylesList = from stlye in stlyeTypes
                                   select new SelectListItem
                                   {
-                                      Text = stlye.ToString(),
+                                      Text = "Time " + stlye.ToString(),
                                       Value = stlye.ToString()
                                   };
 
