@@ -144,14 +144,13 @@ namespace SubtitleViewerWeb.Controllers
         public ActionResult Search()
         {
             SearchModel model = new SearchModel();
-            IEnumerable<Languages> stlyeTypes = Enum.GetValues(typeof(Languages))
-                                                         .Cast<Languages>();
-            model.LanguagesList = from stlye in stlyeTypes
-                               select new SelectListItem
-                               {
-                                   Text = stlye.ToString(),
-                                   Value = stlye.ToString()
-                               };
+
+            model.LanguagesList = from language in model.Languages
+                                  select new SelectListItem
+                                  {
+                                      Text = language.Item1,
+                                      Value = language.Item2,
+                                  };
 
             return View(model);
         }
@@ -160,21 +159,6 @@ namespace SubtitleViewerWeb.Controllers
         [HttpPost]
         public ActionResult Search(SearchModel searchModel)
         {
-            var lang = "all";
-
-            if (searchModel.Language == "English")
-            {
-                lang = "eng";
-            }
-            else if (searchModel.Language == "German")
-            {
-                lang = "ger";
-            }
-            else
-            {
-                lang = "all";
-            }
-
             if (searchModel.Title == null || searchModel.Title == "")
             {
                 TempData["error"] = "Sorry, that is not a valid subtitle query";
@@ -185,7 +169,7 @@ namespace SubtitleViewerWeb.Controllers
             // Open Subtitles query
 
             var osdb = Osdb.Login("OSTestUserAgentTemp");
-            var results = osdb.SearchSubtitlesFromQuery(lang, searchModel.Title, searchModel.Season, searchModel.Episode);
+            var results = osdb.SearchSubtitlesFromQuery(searchModel.Language, searchModel.Title, searchModel.Season, searchModel.Episode);
 
             resultList.Subtitles = results;
 
@@ -282,16 +266,20 @@ namespace SubtitleViewerWeb.Controllers
         [HttpPost]
         public ActionResult Viewer(SubtitleListModel model, string command)
         {
-            if (command.Equals("Upload New"))
+            if (command.Equals("Search"))
+            {
+                return RedirectToAction("Search");
+            }
+            else if (command.Equals("Upload"))
             {
                 return RedirectToAction("Upload");
             }
-            else if (command.Equals("Edit Time"))
+            else if (command.Equals("Edit"))
             {
                 TempData["subtitles"] = model;
                 return RedirectToAction("Edit");
             }
-            else if (command.Equals("Delete All"))
+            else if (command.Equals("Delete"))
             {
                 TempData["subtitles"] = null;
                 return RedirectToAction("Viewer");
