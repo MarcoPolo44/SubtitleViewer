@@ -22,6 +22,7 @@ namespace SubtitleViewerWeb.Models
 
         [DataType(DataType.Time)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{HH:mm:ss}")]
+        [RegularExpression(@"([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]", ErrorMessage = "Time must be in the format - HH:MM:SS")]
         public TimeSpan Time { get; set; }
     }
 }

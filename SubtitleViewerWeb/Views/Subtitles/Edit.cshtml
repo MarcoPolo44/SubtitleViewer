@@ -27,7 +27,7 @@
             @Html.LabelFor(model => model.EditTime, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-2">
                 @Html.TextBoxFor(model => model.EditTime, 
-                    new { @class = "form-control text-box single-line", @Value = Model.Subtitles[0].Time, @required = "required" })
+                    new { @class = "form-control text-box single-line", @Value = Model.Subtitles[0].Time, @required = "required", @placeholder = "00:00:00" })
                 @Html.ValidationMessageFor(model => model.EditTime, "", new { @class = "text-danger" })
             </div>
         </div>
