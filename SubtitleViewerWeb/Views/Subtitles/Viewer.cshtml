@@ -42,8 +42,10 @@
             {
                 <tr>
                     <td>
-                        <input type="submit" name="command" value="@(Model.Subtitles[i].Time)" class="btn btn-link" 
-                               style="padding: 0 0; vertical-align: inherit" />
+                        <a id="@(Model.Subtitles[i].Time)" style="display: block; position: relative; top: -250px; visibility: hidden"></a>
+
+                        <input type="submit" name="command" value="@(Model.Subtitles[i].Time)" class="btn btn-link"
+                                style="padding: 0 0; vertical-align: inherit" />
                     </td>
                     <td>
                         @Html.DisplayFor(model => model.Subtitles[i].Subtitle)

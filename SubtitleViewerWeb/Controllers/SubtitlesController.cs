@@ -334,7 +334,7 @@ namespace SubtitleViewerWeb.Controllers
             }
 
             TempData["subtitles"] = model;
-            return RedirectToAction("Viewer");
+            return new RedirectResult(Url.Action("Viewer") + "#" + model.EditTime.ToString());
         }
 
         // GET: Error
