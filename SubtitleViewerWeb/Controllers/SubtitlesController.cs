@@ -286,8 +286,19 @@ namespace SubtitleViewerWeb.Controllers
             }
             else
             {
-                TempData["error"] = "Sorry, this action is not available.";
-                return RedirectToAction("Error");
+                for (int i = 0; i < model.Subtitles.Count(); i++)
+                {
+                    string timeStr = model.Subtitles[i].Time;
+                    string editTimeStr = command;
+                    if (timeStr.Equals(editTimeStr))
+                    {
+                        model.ID = i;
+                        break;
+                    }
+                }
+
+                TempData["subtitles"] = model;
+                return RedirectToAction("Edit");
             }
         }
 
@@ -311,7 +322,7 @@ namespace SubtitleViewerWeb.Controllers
         {
             if (cmd == "Edit")
             {
-                TimeSpan timeDiff = (model.EditTime - TimeSpan.Parse(model.Subtitles[0].Time));
+                TimeSpan timeDiff = (model.EditTime - TimeSpan.Parse(model.Subtitles[model.ID].Time));
 
                 for (int i = 0; i < model.Subtitles.Count(); ++i)
                 {

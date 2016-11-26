@@ -9,6 +9,8 @@ namespace SubtitleViewerWeb.Models
 {
     public class SubtitleListModel
     {
+        public int ID { get; set; }
+
         public List<SubtitleModel> Subtitles { get; set; } = new List<SubtitleModel>();
 
         [Required]

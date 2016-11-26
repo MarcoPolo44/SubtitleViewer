@@ -16,10 +16,10 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Subtitles[0].Subtitle, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Subtitles[Model.ID].Subtitle, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-6">
-                @Html.TextBoxFor(model => model.Subtitles[0].Subtitle, 
-                    new { @class = "form-control text-box single-line", @Value = Model.Subtitles[0].Subtitle, @readonly = "readonly" })
+                @Html.TextBoxFor(model => model.Subtitles[Model.ID].Subtitle, 
+                    new { @class = "form-control text-box single-line", @Value = Model.Subtitles[Model.ID].Subtitle, @readonly = "readonly" })
             </div>
         </div>
 
@@ -27,7 +27,7 @@
             @Html.LabelFor(model => model.EditTime, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-2">
                 @Html.TextBoxFor(model => model.EditTime, 
-                    new { @class = "form-control text-box single-line", @Value = Model.Subtitles[0].Time, @required = "required", @placeholder = "00:00:00" })
+                    new { @class = "form-control text-box single-line", @Value = Model.Subtitles[Model.ID].Time, @required = "required", @placeholder = "00:00:00" })
                 @Html.ValidationMessageFor(model => model.EditTime, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -40,6 +40,7 @@
                     @Html.HiddenFor(model => Model.Subtitles[i].Time)
                     @Html.HiddenFor(model => Model.Subtitles[i].Subtitle)
                 }
+                @Html.HiddenFor(model => Model.ID)
             }
         </div>
 
