@@ -1,0 +1,8 @@
+﻿.navbar-fixed-top,
+.navbar-fixed-bottom {
+  position: relative;
+}
+
+.img-thumbnail {
+  max-width: 50%;
+}
