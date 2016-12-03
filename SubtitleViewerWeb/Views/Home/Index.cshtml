@@ -2,60 +2,47 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
+<div class="jumbotron text-center">
     <h1>Subtitle Companion</h1>
-    <p class="lead">A free web-based .srt file parser for viewing subtitles <i>alongside</i> their corresponding video.</p>
+    <p class="lead">A free web-based (.srt) file parser for viewing subtitles <i>alongside</i> their corresponding video.</p>
 
-    <a class="col-md-offset-1" href="~/Content/Images/Example.png">
-        <img src="~/Content/Images/Example.png" class="img-responsive img-thumbnail" alt="Subtitle Companion Example">
-    </a>
+    <hr style="border-top-color:black"/>
+    <br>
+
+    <a href="@Url.Action("Search", "Subtitles")" class="btn btn-primary">Search</a>
+    <h6>OR</h6>
+    <a href="@Url.Action("Upload", "Subtitles")" class="btn btn-primary">Upload</a>
 </div>
 
-<div class="row">
-    <div class="col-md-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h1 class="panel-title">Upload</h1>
-            </div>
-
-            <div class="panel-body">
-                <p>Get a subtitle file from this PC.</p>
-                <a href="@Url.Action("Upload", "Subtitles")" class="btn btn-primary">Go &raquo;</a>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h1 class="panel-title">Search</h1>
-            </div>
-
-            <div class="panel-body">
-                <p>Get a subtitle file from the web.</p>
-                <a href="@Url.Action("Search", "Subtitles")" class="btn btn-primary">Go &raquo;</a>
-            </div>
-        </div>
-    </div>
+<div class="row text-center">
+    <h3>* * * *</h3>
 </div>
 
-<div class="row">
+<div class="row text-center">
+    <div class="col-md-4">
+        <h2>Subtitle Files</h2>
+        <p>
+            Subtitle (.srt) files are available for download all over the internet, and 
+            there are a number of websites that make subtitles for popular TV shows and 
+            movies freely available.
+        </p>
+        <p><a class="btn btn-default" href="http://www.opensubtitles.org/en/search" target="_blank">Find Files</a></p>
+    </div>
     <div class="col-md-4">
         <h2>Language Learning</h2>
         <p>
             Watching video content in a target language is a powerful immersion technique. Subtitle 
-            Companion enhances this experience by enabling the ability to view corresponding subtitles in
+            Companion enhances this experience by enabling users to view corresponding subtitles in
             both a target and native language, similtaneously.
         </p>
-        <p><a class="btn btn-default" href="@Url.Action("About", "Home")">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Subtitle Files</h2>
-        <p>Subtitle (.srt) files are available all over the internet, and there are a number of websites that make subtitles for popular TV shows and movies freely available.</p>
-        <p><a class="btn btn-default" href="http://www.tvsubtitles.net/">Learn more &raquo;</a></p>
+        <p><a class="btn btn-default" href="@Url.Action("About", "Home")" target="_blank">About Us</a></p>
     </div>
     <div class="col-md-4">
         <h2>Watch on Netflix</h2>
-        <p>Netflix is a great way to consume video content in a foriegn laguage.</p>
-        <p><a class="btn btn-default" href="https://www.netflix.com/">Learn more &raquo;</a></p>
+        <p>
+            Netflix is a great way to consume video content in a foriegn laguage. Subscribers can adjust 
+            their language preferences to access multilingual subtitles and dubbed audio.
+        </p>
+        <p><a class="btn btn-default" href="https://help.netflix.com/en/node/372" target="_blank">Learn More</a></p>
     </div>
 </div>

@@ -4,5 +4,10 @@
 }
 
 .img-thumbnail {
-  max-width: 50%;
+  max-width: 70%;
+}
+
+.jumbotron {
+  background-image: url("/Content/Images/Example.png");
+  background-size: 100% 100%;
 }
