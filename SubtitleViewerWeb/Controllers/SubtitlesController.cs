@@ -274,10 +274,10 @@ namespace SubtitleViewerWeb.Controllers
             {
                 return RedirectToAction("Upload");
             }
-            else if (command.Equals("Edit"))
+            else if (command.Equals("Sync"))
             {
                 TempData["subtitles"] = model;
-                return RedirectToAction("Edit");
+                return RedirectToAction("Sync");
             }
             else if (command.Equals("Delete"))
             {
@@ -298,29 +298,29 @@ namespace SubtitleViewerWeb.Controllers
                 }
 
                 TempData["subtitles"] = model;
-                return RedirectToAction("Edit");
+                return RedirectToAction("Sync");
             }
         }
 
-        // GET: Edit
-        public ActionResult Edit()
+        // GET: Sync
+        public ActionResult Sync()
         {
             subtitleList = (SubtitleListModel)TempData["subtitles"];
 
             if (subtitleList == null || subtitleList.Subtitles.Count == 0)
             {
-                TempData["error"] = "Sorry, we could not find any subtitles to edit.";
+                TempData["error"] = "Sorry, we could not find any subtitles to synchronize.";
                 return RedirectToAction("Error");
             }
 
             return View(subtitleList);
         }
 
-        // POST: Edit
+        // POST: Sync
         [HttpPost]
-        public ActionResult Edit(SubtitleListModel model, string cmd)
+        public ActionResult Sync(SubtitleListModel model, string cmd)
         {
-            if (cmd == "Edit")
+            if (cmd == "Sync")
             {
                 TimeSpan timeDiff = (model.EditTime - TimeSpan.Parse(model.Subtitles[model.ID].Time));
 

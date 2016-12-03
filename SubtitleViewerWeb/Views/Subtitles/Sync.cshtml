@@ -1,12 +1,12 @@
 ﻿@model SubtitleViewerWeb.Models.SubtitleListModel
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Synchronise";
 }
 
-<h2>Edit</h2>
+<h2>Synchronise</h2>
 
-@using (Html.BeginForm("Edit", "Subtitles", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Sync", "Subtitles", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -46,7 +46,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" name="cmd" value="Edit" class="btn btn-primary" />
+                <input type="submit" name="cmd" value="Sync" class="btn btn-primary" />
                 <input type="submit" name="cmd" value="Cancel" class="btn btn-default" formnovalidate />
             </div>
         </div>

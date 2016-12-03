@@ -319,12 +319,12 @@
     <Content Include="Views\Subtitles\Index.cshtml" />
     <Content Include="Views\Subtitles\Upload.cshtml" />
     <Content Include="Views\Subtitles\Viewer.cshtml" />
-    <Content Include="Views\Subtitles\Edit.cshtml" />
     <Content Include="Views\Subtitles\Error.cshtml" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
     <Content Include="Views\Subtitles\Search.cshtml" />
     <Content Include="Views\Subtitles\Result.cshtml" />
+    <Content Include="Views\Subtitles\Sync.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
