@@ -11,3 +11,7 @@
   background-image: url("/Content/Images/Example.png");
   background-size: 100% 100%;
 }
+
+h5, .h5 {
+    font-style: italic;
+}
