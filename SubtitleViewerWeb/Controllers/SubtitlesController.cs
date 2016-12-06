@@ -53,7 +53,7 @@ namespace SubtitleViewerWeb.Controllers
             {
                 // Upload file
                 var fileName = Path.GetFileName(upload.File.FileName);
-                var filePath = Path.Combine(Server.MapPath("~/Subtitles"), fileName);
+                var filePath = Path.Combine(Server.MapPath("~/App_Data"), fileName);
                 upload.File.SaveAs(filePath);
 
                 // Parse file
@@ -80,7 +80,7 @@ namespace SubtitleViewerWeb.Controllers
             string result = null;
             var parser = new SubtitlesParser.Classes.Parsers.SubParser();
 
-            var filePath = Path.Combine(Server.MapPath("~/Subtitles"), fileName);
+            var filePath = Path.Combine(Server.MapPath("~/App_Data"), fileName);
 
             using (var fileStream = System.IO.File.OpenRead(filePath))
             {
@@ -233,13 +233,13 @@ namespace SubtitleViewerWeb.Controllers
 
                 // Download file
                 var osdb = Osdb.Login("OSTestUserAgentTemp");
-                osdb.DownloadSubtitleToPath(Server.MapPath("~/Subtitles"), selectedResult);
+                osdb.DownloadSubtitleToPath(Server.MapPath("~/App_Data"), selectedResult);
 
                 // Parse file
                 error = ParseSubtitles(selectedResult.SubtitleFileName, model.Time, model.Style);
 
                 // Delete file off server
-                var filePath = Path.Combine(Server.MapPath("~/Subtitles"), selectedResult.SubtitleFileName);
+                var filePath = Path.Combine(Server.MapPath("~/App_Data"), selectedResult.SubtitleFileName);
                 System.IO.File.Delete(filePath);
             }
 
