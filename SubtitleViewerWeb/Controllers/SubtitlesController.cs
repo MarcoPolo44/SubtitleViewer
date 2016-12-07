@@ -309,7 +309,7 @@ namespace SubtitleViewerWeb.Controllers
 
             if (subtitleList == null || subtitleList.Subtitles.Count == 0)
             {
-                TempData["error"] = "Sorry, we could not find any subtitles to synchronize.";
+                TempData["error"] = "Sorry, we could not find any subtitles to synchronise.";
                 return RedirectToAction("Error");
             }
 

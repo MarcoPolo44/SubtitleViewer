@@ -14,10 +14,12 @@ namespace SubtitleViewerWeb.Models
 
         [Required]
         public IEnumerable<SelectListItem> LanguagesList { get; set; } = new List<SelectListItem>();
+
+        [Required]
         public string Language { get; set; }
 
-        public int Season { get; set; }
-        public int Episode { get; set; }
+        public int? Season { get; set; }
+        public int? Episode { get; set; }
 
         public List<Tuple<String, String>> Languages = new List<Tuple<String, String>>()
         {
