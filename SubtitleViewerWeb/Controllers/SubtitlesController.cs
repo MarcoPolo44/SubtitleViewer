@@ -168,7 +168,7 @@ namespace SubtitleViewerWeb.Controllers
             //
             // Open Subtitles query
 
-            var osdb = Osdb.Login("OSTestUserAgentTemp");
+            var osdb = Osdb.Login("Subtitle Companion v0.1");
             var results = osdb.SearchSubtitlesFromQuery(searchModel.Language, searchModel.Title, searchModel.Season, searchModel.Episode);
 
             resultList.Subtitles = results;
@@ -232,7 +232,7 @@ namespace SubtitleViewerWeb.Controllers
                 }
 
                 // Download file
-                var osdb = Osdb.Login("OSTestUserAgentTemp");
+                var osdb = Osdb.Login("Subtitle Companion v0.1");
                 osdb.DownloadSubtitleToPath(Server.MapPath("~/App_Data"), selectedResult);
 
                 // Parse file
