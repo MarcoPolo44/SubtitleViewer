@@ -1,12 +1,12 @@
 ﻿@model SubtitleViewerWeb.Models.ResultListModel
 
 @{
-    ViewBag.Title = "Result";
+    ViewBag.Title = "Results";
 }
 
-<h2>Result</h2>
+<h2>Results</h2>
 
-@using (Html.BeginForm("Result", "Subtitles", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Results", "Subtitles", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 

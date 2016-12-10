@@ -195,14 +195,14 @@ namespace SubtitleViewerWeb.Controllers
             //
             // View
 
-            TempData["result"] = resultList;
-            return RedirectToAction("Result");
+            TempData["results"] = resultList;
+            return RedirectToAction("Results");
         }
 
-        // GET: Result
-        public ActionResult Result()
+        // GET: Results
+        public ActionResult Results()
         {
-            resultList = (ResultListModel)TempData["result"];
+            resultList = (ResultListModel)TempData["results"];
 
             if (resultList == null || resultList.Subtitles.Count() == 0)
             {
@@ -213,9 +213,9 @@ namespace SubtitleViewerWeb.Controllers
             return View(resultList);
         }
 
-        // POST: Result
+        // POST: Results
         [HttpPost]
-        public ActionResult Result(ResultListModel model)
+        public ActionResult Results(ResultListModel model)
         {
             Subtitle selectedResult = new Subtitle();
             string error = "Sorry, no file could be found.";
