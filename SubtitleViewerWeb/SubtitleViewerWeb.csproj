@@ -243,6 +243,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\Images\Example.png" />
     <Content Include="Content\Images\Favicon.ico" />
+    <Content Include="Content\Images\OpenSubtitles.ico" />
     <Content Include="Content\Images\Original.png" />
     <Content Include="Content\Images\Results.png" />
     <Content Include="Content\Images\Search.png" />
