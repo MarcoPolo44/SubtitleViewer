@@ -244,6 +244,13 @@
     <Content Include="Content\Images\Example.png" />
     <Content Include="Content\Images\Favicon.ico" />
     <Content Include="Content\Images\Original.png" />
+    <Content Include="Content\Images\Results.png" />
+    <Content Include="Content\Images\Search.png" />
+    <Content Include="Content\Images\Synchronise.png" />
+    <Content Include="Content\Images\TimeElapsed.png" />
+    <Content Include="Content\Images\TimeRemaining.png" />
+    <Content Include="Content\Images\Upload.png" />
+    <Content Include="Content\Images\Viewer.png" />
     <Content Include="Content\stylesheet-site.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
