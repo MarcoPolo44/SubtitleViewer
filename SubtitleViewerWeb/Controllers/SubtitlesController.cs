@@ -118,7 +118,7 @@ namespace SubtitleViewerWeb.Controllers
                             foreach (var line in item.Lines)
                             {
                                 subtitle = subtitle + line;
-                                subtitle = subtitle + "\n";
+                                subtitle = subtitle + " ";
                             }
                             model.Subtitle = subtitle;
 
