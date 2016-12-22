@@ -48,7 +48,7 @@
                                 style="padding: 0 0; vertical-align: inherit" />
                     </td>
                     <td>
-                        @Html.DisplayFor(model => model.Subtitles[i].Subtitle)
+                        @Html.Raw(Model.Subtitles[i].Subtitle)
                     </td>
                 </tr>
             }
